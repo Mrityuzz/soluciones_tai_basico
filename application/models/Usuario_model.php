@@ -9,6 +9,7 @@ class Usuario_model extends CI_Model {
 
     // Obtener todos los usuarios
     public function obtener_todos() {
+        $this->db->order_by('us_id', 'ASC'); 
         return $this->db->get('us_usuarios')->result();
     }
 
@@ -19,11 +20,29 @@ class Usuario_model extends CI_Model {
         return $query->num_rows() > 0;
     }
 
-    // Insertar nuevo usuario con validación
-    public function insertar($data) {
+    // Insertar nuevo usuario con validación y cifrado
+    public function insertar($data, $algoritmo = 'bcrypt') {
         if ($this->existe_correo($data['us_correo'])) {
             return false; 
         }
+
+        // Cifrado de contraseña según algoritmo
+        switch ($algoritmo) {
+            case 'md5':
+                $data['us_password'] = md5($data['us_password']);
+                break;
+            case 'sha1':
+                $data['us_password'] = sha1($data['us_password']);
+                break;
+            case 'sha256':
+                $data['us_password'] = hash('sha256', $data['us_password']);
+                break;
+            case 'bcrypt':
+            default:
+                $data['us_password'] = password_hash($data['us_password'], PASSWORD_BCRYPT);
+                break;
+        }
+
         return $this->db->insert('us_usuarios', $data);
     }
 
@@ -37,8 +56,25 @@ class Usuario_model extends CI_Model {
         return $this->db->where('us_id', $id)->get('us_usuarios')->row();
     }
 
-    // Actualizar usuario por ID
-    public function actualizar($id, $data) {
+    // Actualizar usuario por ID (con opción de cambiar contraseña)
+    public function actualizar($id, $data, $algoritmo = null) {
+        if (!empty($data['us_password']) && $algoritmo) {
+            switch ($algoritmo) {
+                case 'md5':
+                    $data['us_password'] = md5($data['us_password']);
+                    break;
+                case 'sha1':
+                    $data['us_password'] = sha1($data['us_password']);
+                    break;
+                case 'sha256':
+                    $data['us_password'] = hash('sha256', $data['us_password']);
+                    break;
+                case 'bcrypt':
+                default:
+                    $data['us_password'] = password_hash($data['us_password'], PASSWORD_BCRYPT);
+                    break;
+            }
+        }
         return $this->db->where('us_id', $id)->update('us_usuarios', $data);
     }
 }

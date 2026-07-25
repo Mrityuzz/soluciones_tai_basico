@@ -25,6 +25,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['base_url'] = (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off') ? 'http://' : 'https://';
 $config['base_url'] .= $_SERVER['HTTP_HOST'] . '/';
+$config['base_url'] = 'http://localhost/soluciones_tai_basico/';
+
+
+
 
 
 /*
