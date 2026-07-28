@@ -7,7 +7,6 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <!-- Columna izquierda: avatar y datos -->
             <div class="col-md-4 text-center border-end">
               <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" 
                    class="rounded-circle mb-3" width="120" alt="Avatar">
@@ -16,7 +15,6 @@
               <span class="badge bg-dark"><?php echo ucfirst($admin->rol); ?></span>
             </div>
 
-            <!-- Columna derecha: formulario -->
             <div class="col-md-8">
               <?php if($this->session->flashdata('msg')): ?>
                 <div class="alert alert-info">
