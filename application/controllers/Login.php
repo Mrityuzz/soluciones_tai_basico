@@ -14,16 +14,17 @@ class Login extends CI_Controller {
     }
 
     public function auth() {
-        $correo = $this->input->post('correo');
-        $password = $this->input->post('password');
+        $login_input = $this->input->post('login');
+        $password    = $this->input->post('password');
 
-        $admin = $this->Admin_model->validar_admin($correo, $password);
+        $admin = $this->Admin_model->validar_admin($login_input, $password);
 
         if ($admin) {
             $this->session->set_userdata([
                 'admin_logged' => true,
                 'admin_id'     => $admin->id_admin,
                 'admin_correo' => $admin->correo,
+                'admin_user'   => $admin->username,
                 'admin_rol'    => $admin->rol
             ]);
             redirect('usuarios'); 

@@ -9,27 +9,27 @@ class Registro extends CI_Controller {
         $this->load->library('session');
     }
 
-    
     public function index() {
         $this->load->view('registro_view');
     }
 
-    
     public function registrar() {
+        $username = $this->input->post('username'); 
         $correo   = $this->input->post('correo');
         $password = $this->input->post('password');
         $rol      = $this->input->post('rol'); 
 
-        
+        // Hash de la contraseña
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
+        // Datos para insertar
         $data = array(
+            'username' => $username,
             'correo'   => $correo,
             'password' => $hash,
             'rol'      => $rol
         );
 
-        
         if ($this->db->insert('admins', $data)) {
             $this->session->set_flashdata('msg', 'Administrador registrado correctamente');
             redirect('login');

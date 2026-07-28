@@ -23,6 +23,10 @@
 
             <form method="post" action="<?php echo site_url('registro/registrar'); ?>">
               <div class="mb-3">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+              </div>
+              <div class="mb-3">
                 <label for="correo" class="form-label">Correo</label>
                 <input type="email" id="correo" name="correo" class="form-control" required>
               </div>

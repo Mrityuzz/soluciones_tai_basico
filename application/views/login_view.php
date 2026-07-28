@@ -18,13 +18,14 @@
             <?php if(!empty($error)): ?>
               <div class="alert alert-danger"><?php echo $error; ?></div>
             <?php endif; ?>
+
             <form method="post" action="<?php echo site_url('login/auth'); ?>">
               <div class="mb-3">
-                <label for="correo">Correo</label>
-                <input type="email" id="correo" name="correo" class="form-control" required>
+                <label for="login" class="form-label">Correo o Usuario</label>
+                <input type="text" id="login" name="login" class="form-control" required>
               </div>
               <div class="mb-3">
-                <label for="password">Contraseña</label>
+                <label for="password" class="form-label">Contraseña</label>
                 <input type="password" id="password" name="password" class="form-control" required>
               </div>
               <button type="submit" class="btn btn-primary w-100">Ingresar</button>

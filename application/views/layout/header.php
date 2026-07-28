@@ -34,6 +34,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?php echo site_url('perfil'); ?>">
+                        <i class="bi bi-person-circle"></i> Perfil
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-danger" href="<?php echo site_url('login/logout'); ?>">
                         <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                     </a>
