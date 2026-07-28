@@ -13,6 +13,16 @@ class Usuario_model extends CI_Model {
         return $this->db->get('us_usuarios')->result();
     }
 
+    // Obtener usuarios por un conjunto de IDs
+    public function obtener_por_ids($ids) {
+        if (empty($ids)) {
+            return [];
+        }
+        $this->db->where_in('us_id', $ids);
+        $this->db->order_by('us_id', 'ASC');
+        return $this->db->get('us_usuarios')->result();
+    }
+
     // Verificar si ya existe un correo
     public function existe_correo($correo) {
         $this->db->where('us_correo', $correo);
