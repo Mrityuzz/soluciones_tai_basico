@@ -10,7 +10,6 @@ class Perfil extends CI_Controller {
         $this->load->helper(array('url', 'form'));
     }
 
-    
     public function index() {
         if (!$this->session->userdata('admin_logged')) {
             redirect('login');
@@ -21,7 +20,7 @@ class Perfil extends CI_Controller {
 
         $this->load->view('layout/header'); 
         $this->load->view('perfil', $data);
-        //$this->load->view('layout/footer'); 
+        // $this->load->view('layout/footer'); 
     }
 
     public function cambiar_password() {
@@ -51,5 +50,18 @@ class Perfil extends CI_Controller {
 
         $this->session->set_flashdata('msg', 'Contraseña actualizada correctamente');
         redirect('perfil');
+    }
+
+    public function eliminar_cuenta() {
+        if (!$this->session->userdata('admin_logged')) {
+            redirect('login');
+        }
+
+        $id_admin = $this->session->userdata('admin_id');
+        $this->Admin_model->eliminar_usuario($id_admin);
+
+        $this->session->sess_destroy();
+
+        redirect('registro');
     }
 }

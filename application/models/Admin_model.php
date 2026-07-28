@@ -10,7 +10,6 @@ class Admin_model extends CI_Model {
 
     
     public function validar_admin($login_input, $password) {
-        
         $this->db->where('correo', $login_input);
         $this->db->or_where('username', $login_input);
         $query = $this->db->get('admins');
@@ -37,5 +36,10 @@ class Admin_model extends CI_Model {
     
     public function registrar_admin($data) {
         return $this->db->insert('admins', $data);
+    }
+
+    
+    public function eliminar_usuario($id_admin) {
+        return $this->db->delete('admins', array('id_admin' => $id_admin));
     }
 }

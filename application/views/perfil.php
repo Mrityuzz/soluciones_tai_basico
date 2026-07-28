@@ -38,6 +38,15 @@
                 </div>
                 <button type="submit" class="btn btn-success w-100">Actualizar Contraseña</button>
               </form>
+
+              <hr class="my-4">
+              <form method="post" action="<?php echo site_url('perfil/eliminar_cuenta'); ?>">
+                <button type="submit" class="btn btn-danger w-100"
+                        onclick="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');">
+                  <i class="bi bi-trash"></i> Eliminar Cuenta
+                </button>
+              </form>
+
             </div>
           </div>
         </div>
