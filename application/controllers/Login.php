@@ -6,6 +6,7 @@ class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Admin_model');
+        $this->load->model('Usuario_model'); 
         $this->load->library('session');
     }
 
@@ -28,10 +29,25 @@ class Login extends CI_Controller {
                 'admin_rol'    => $admin->rol
             ]);
             redirect('usuarios'); 
-        } else {
-            $data['error'] = 'Credenciales inválidas';
-            $this->load->view('login_view', $data);
+            return;
         }
+
+        // Si no es admin, intentamos validar como usuario normal
+        $usuario = $this->Usuario_model->login($login_input, $password);
+
+        if ($usuario) {
+            $this->session->set_userdata([
+                'us_id'  => $usuario->us_id,
+                'rol'    => $usuario->rol,
+                'correo' => $usuario->us_correo
+            ]);
+            redirect('usuario/perfil'); 
+            return;
+        }
+
+        // Si falla en ambos casos
+        $data['error'] = 'Credenciales inválidas';
+        $this->load->view('login_view', $data);
     }
 
     public function logout() {

@@ -9,7 +9,11 @@
         </div>
         <div class="card-body p-4">
 
-          <form method="post" action="<?php echo site_url('usuarios/actualizar/'.$usuario->us_id); ?>">
+          <form method="post" action="<?php 
+            echo ($this->session->userdata('rol') == 'admin') 
+              ? site_url('usuarios/actualizar/'.$usuario->us_id) 
+              : site_url('usuario/actualizar'); 
+          ?>">
             <div class="mb-3">
               <label class="form-label fw-bold"><i class="bi bi-person"></i> Nombre</label>
               <input type="text" name="nombre" value="<?php echo $usuario->us_nombre; ?>" class="form-control form-control-lg" required>
@@ -36,24 +40,31 @@
               <small class="text-muted">Déjalo vacío si no deseas cambiar la contraseña.</small>
             </div>
 
-            <div class="mb-3">
-              <label class="form-label fw-bold"><i class="bi bi-shield-lock"></i> Algoritmo de cifrado</label>
-              <select name="algoritmo" class="form-select form-select-lg">
-                <option value="">-- Selecciona si cambias contraseña --</option>
-                <option value="bcrypt">bcrypt (recomendado)</option>
-                <option value="sha256">sha256</option>
-                <option value="sha1">sha1</option>
-                <option value="md5">md5</option>
-              </select>
-            </div>
+            <?php if($this->session->userdata('rol') == 'admin'): ?>
+              <!-- Solo admin puede elegir algoritmo -->
+              <div class="mb-3">
+                <label class="form-label fw-bold"><i class="bi bi-shield-lock"></i> Algoritmo de cifrado</label>
+                <select name="algoritmo" class="form-select form-select-lg">
+                  <option value="">-- Selecciona si cambias contraseña --</option>
+                  <option value="bcrypt">bcrypt (recomendado)</option>
+                  <option value="sha256">sha256</option>
+                  <option value="sha1">sha1</option>
+                  <option value="md5">md5</option>
+                </select>
+              </div>
+            <?php endif; ?>
 
             <div class="d-flex justify-content-between mt-4">
               <button type="submit" class="btn btn-success btn-lg">
                 <i class="bi bi-check-circle"></i> Guardar cambios
               </button>
-              <a href="<?php echo site_url('usuarios'); ?>" class="btn btn-secondary btn-lg">
-                <i class="bi bi-x-circle"></i> Cancelar
-              </a>
+
+              <?php if($this->session->userdata('rol') == 'admin'): ?>
+                <!-- Solo admin ve botón cancelar que regresa al listado -->
+                <a href="<?php echo site_url('usuarios'); ?>" class="btn btn-secondary btn-lg">
+                  <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+              <?php endif; ?>
             </div>
           </form>
 

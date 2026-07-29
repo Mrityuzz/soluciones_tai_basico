@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login Admin</title>
+  <title>Login</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -12,7 +12,11 @@
     <div class="col-md-5">
       <div class="card shadow-lg border-0 rounded-4">
         <div class="card-header bg-primary text-white text-center rounded-top">
-          <h3><i class="bi bi-shield-lock"></i> Panel de Administración</h3>
+          <?php if($this->session->userdata('rol') == 'admin' || $this->session->userdata('rol') == 'superadmin'): ?>
+            <h3><i class="bi bi-shield-lock"></i> Panel de Administración</h3>
+          <?php else: ?>
+            <h3><i class="bi bi-person-circle"></i> Acceso de Usuario</h3>
+          <?php endif; ?>
         </div>
         <div class="card-body p-4">
 
@@ -41,11 +45,13 @@
             </button>
           </form>
 
-          <div class="text-center mt-4">
-            <small class="text-muted">¿No tienes cuenta? 
-              <a href="<?php echo site_url('registro'); ?>" class="fw-bold text-decoration-none">Regístrate aquí</a>
-            </small>
-          </div>
+          <?php if(!$this->session->userdata('rol') || $this->session->userdata('rol') == 'usuario'): ?>
+            <div class="text-center mt-4">
+              <small class="text-muted">¿No tienes cuenta? 
+                <a href="<?php echo site_url('registro'); ?>" class="fw-bold text-decoration-none">Regístrate aquí</a>
+              </small>
+            </div>
+          <?php endif; ?>
 
         </div>
       </div>

@@ -87,4 +87,34 @@ class Usuario_model extends CI_Model {
         }
         return $this->db->where('us_id', $id)->update('us_usuarios', $data);
     }
+    // Validar credenciales de login de usuario normal
+    public function login($correo, $password) {
+        $usuario = $this->db->get_where('us_usuarios', array('us_correo' => $correo))->row();
+    if ($usuario) {
+        // Detectar tipo de hash
+        if (substr($usuario->us_password, 0, 4) === '$2y$') {
+            // bcrypt
+            if (password_verify($password, $usuario->us_password)) {
+                return $usuario;
+            }
+        } elseif (strlen($usuario->us_password) === 32) {
+            // md5
+            if (md5($password) === $usuario->us_password) {
+                return $usuario;
+            }
+        } elseif (strlen($usuario->us_password) === 40) {
+            // sha1
+            if (sha1($password) === $usuario->us_password) {
+                return $usuario;
+            }
+        } elseif (strlen($usuario->us_password) === 64) {
+            // sha256
+            if (hash('sha256', $password) === $usuario->us_password) {
+                return $usuario;
+            }
+        }
+    }
+    return false;
+}
+
 }
