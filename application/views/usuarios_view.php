@@ -1,14 +1,18 @@
 <?php $this->load->view('layout/header'); ?>
 
 <div class="container mt-4">
-    <h2 class="mb-4">Lista de Usuarios</h2>
-
-    <?php if(!empty($msg)): ?>
-        <div class="alert alert-info"><?php echo $msg; ?></div>
-    <?php endif; ?>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary"><i class="bi bi-people"></i> Lista de Usuarios</h2>
+        <?php if(!empty($msg)): ?>
+            <div class="alert alert-info d-flex align-items-center mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                <?php echo $msg; ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <!-- Acciones principales -->
-    <div class="row mb-3">
+    <div class="row g-3 mb-4">
         <div class="col-md-4">
             <a href="<?php echo site_url('usuarios/nuevo'); ?>" class="btn btn-primary w-100">
                 <i class="bi bi-person-plus"></i> Agregar Usuario
@@ -33,10 +37,10 @@
     </div>
 
     <!-- Tabla de usuarios -->
-    <div class="card shadow-sm mb-4">
+    <div class="card shadow-lg border-0 rounded-4 mb-4">
         <div class="card-body">
-            <table class="table table-hover" id="usuarios_table">
-                <thead class="table-dark">
+            <table class="table table-striped table-hover align-middle" id="usuarios_table">
+                <thead class="table-primary">
                     <tr>
                         <th><input type="checkbox" id="select_all"></th>
                         <th>ID</th>
@@ -44,7 +48,7 @@
                         <th>Apellidos</th>
                         <th>Correo</th>
                         <th>Teléfono</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,12 +60,12 @@
                             <td><?php echo $u->us_apellidos; ?></td>
                             <td><?php echo $u->us_correo; ?></td>
                             <td><?php echo $u->us_telefono; ?></td>
-                            <td>
-                                <a href="<?php echo site_url('usuarios/editar/'.$u->us_id); ?>" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil"></i> Editar
+                            <td class="text-center">
+                                <a href="<?php echo site_url('usuarios/editar/'.$u->us_id); ?>" class="btn btn-warning btn-sm me-1">
+                                    <i class="bi bi-pencil"></i>
                                 </a>
                                 <a href="<?php echo site_url('usuarios/borrar/'.$u->us_id); ?>" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-trash"></i> Borrar
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </td>
                         </tr>
@@ -71,20 +75,19 @@
         </div>
     </div>
 
-    <!-- Bloque separado para importación -->
-    <div class="card shadow-sm">
-        <div class="card-header bg-info text-white">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-info text-white fw-bold">
             <i class="bi bi-upload"></i> Importar Usuarios
         </div>
         <div class="card-body">
-            <a href="<?php echo site_url('usuarios/plantilla_excel'); ?>" class="btn btn-info mb-3">
+            <a href="<?php echo site_url('usuarios/plantilla_excel'); ?>" class="btn btn-outline-info mb-3">
                 <i class="bi bi-download"></i> Descargar Plantilla Excel
             </a>
             <form method="post" enctype="multipart/form-data" action="<?php echo site_url('usuarios/import_excel'); ?>">
                 <div class="mb-3">
                     <input type="file" name="archivo_excel" accept=".xlsx,.xls" class="form-control" required>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary w-100">
                     <i class="bi bi-cloud-upload"></i> Importar
                 </button>
             </form>
@@ -94,7 +97,6 @@
 
 <?php $this->load->view('layout/footer'); ?>
 
-<!-- Script para controlar el checkbox "seleccionar todos" y mandar IDs -->
 <script>
     document.getElementById('select_all').addEventListener('click', function() {
         let checkboxes = document.querySelectorAll('.row_checkbox');

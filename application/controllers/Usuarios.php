@@ -199,14 +199,6 @@ class Usuarios extends CI_Controller {
             $col++;
         }
 
-        // fila de ejemplo
-        $sheet->setCellValue('A2', 'Juan');
-        $sheet->setCellValue('B2', 'Pérez López');
-        $sheet->setCellValue('C2', 'juan.perez@ejemplo.com');
-        $sheet->setCellValue('D2', '4431112233');
-        $sheet->setCellValue('E2', 'clave123');
-
-        
         $sheet->getStyle('A1:E2')->applyFromArray([
             'borders' => [
                 'allborders' => ['style' => PHPExcel_Style_Border::BORDER_THIN]
